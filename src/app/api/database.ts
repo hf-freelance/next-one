@@ -9,8 +9,8 @@ export const db = new sqlite3.Database(
   if (err) {
    console.error(err);
   }
-  console.log("Connected to the Nostra database.");
- }
+
+}
 );
 
 export const apiGet = async (query: string) => {
@@ -26,6 +26,18 @@ export const apiGet = async (query: string) => {
 };
    
 export const apiPost = async (query: string, values: string[]) => {
+    return await new Promise((resolve, reject) => {
+        db.run(query, values, function (err) {
+            if (err) {
+                console.log(err);
+                reject(err);
+            }
+            resolve(null);
+        });
+    });
+};
+
+export const apiDelete = async (query: string, values: string[]) => {
     return await new Promise((resolve, reject) => {
         db.run(query, values, function (err) {
             if (err) {
