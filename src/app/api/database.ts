@@ -9,11 +9,10 @@ export const db = new sqlite3.Database(
   if (err) {
    console.error(err);
   }
-
 }
 );
 
-export const apiGet = async (query: string) => {
+export const dbGet = async (query: string) => {
     return await new Promise((resolve, reject) => {
         db.all(query, (err: Error, row: unknown) => {
             if (err) {
@@ -25,7 +24,7 @@ export const apiGet = async (query: string) => {
     });
 };
    
-export const apiPost = async (query: string, values: string[]) => {
+export const dbPost = async (query: string, values: (string|number|boolean)[]) => {
     return await new Promise((resolve, reject) => {
         db.run(query, values, function (err) {
             if (err) {
@@ -37,7 +36,7 @@ export const apiPost = async (query: string, values: string[]) => {
     });
 };
 
-export const apiDelete = async (query: string, values: string[]) => {
+export const dbDelete = async (query: string, values: string[]) => {
     return await new Promise((resolve, reject) => {
         db.run(query, values, function (err) {
             if (err) {

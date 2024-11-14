@@ -3,8 +3,10 @@
 'use client';
 
 import { Category } from "./page";
+import { useRouter } from 'next/navigation';
 
 export default function ItemForm(props: { data: Category[]; }) {
+    const router = useRouter();
     const data = props.data;
        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function handleSubmitItem(e: { preventDefault: () => void; target: any }) {
@@ -20,8 +22,10 @@ export default function ItemForm(props: { data: Category[]; }) {
                 "caption": formData.get("caption"),
                 "imgReference": formData.get("imgReference"),
                 "category": formData.get("category"),
+                "price": formData.get("price"),
             })
-          });
+          }).then(() => router.refresh())
+          .catch((err) => console.log(err));
     }
 
     return (
@@ -44,6 +48,11 @@ export default function ItemForm(props: { data: Category[]; }) {
                     <div>Image Reference</div>
                     <label>
                         <input name="imgReference" type="text"></input>
+                    </label>
+
+                    <div>Price</div>
+                    <label>
+                        <input name="price" type="text"></input>
                     </label>
                 
                     <div>Category</div>

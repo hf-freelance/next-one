@@ -1,7 +1,10 @@
 /* eslint-disable @next/next/no-async-client-component */
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 export default function CatForm() {
+    const router = useRouter();
     let message = '';
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const handleSubmitCategory = (e: { preventDefault: () => void; target: any }) => {
@@ -16,8 +19,8 @@ export default function CatForm() {
         fetch('http://localhost:3000/api/category', {
             method: 'POST',
             body: JSON.stringify({"label": formData.get("label")})
-        }).then(() => message = 'New category added')
-        .catch(() => message = 'Error addind category');
+        }).then(() => router.refresh())
+        .catch((err) => console.log(err));
     }
 
     return (

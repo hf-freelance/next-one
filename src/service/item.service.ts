@@ -1,26 +1,47 @@
-import { apiGet } from "@/app/api/database";
+import { dbGet, dbPost } from "@/app/api/database";
+import { Item } from "@/app/cat/page";
 
 class ItemService {
-
     async fetchItems() {
-        const query = `
-        SELECT * from Item;
-      `;
+        const query = `SELECT * from Item`;
     
-     let body;
-     try {
-      await apiGet(query)
-       .then((res) => {
-            body = res;
-       })
-       .catch((err: Error) => {
-            body = { error: err };
-       });
-       return body;
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        } catch (error: any) {
-            console.error(error.message);
+        let body;
+        try {
+            await dbGet(query)
+                .then((res) => {
+                        body = res;
+                })
+                .catch((err: Error) => {
+                        body = { error: err };
+                });
+            return body;
+
+        } catch (error) {
+            console.error(error);
         }
+    }
+
+    async addItem(data: Item) {
+        const { name, caption, imgReference, price, available, category } = data;
+       
+        const query = `
+           INSERT INTO Item(title, caption, imgReference, price, available, category)
+           VALUES(?, ?, ?, ?, ?, ?)
+         `;
+        const values = [name, caption, imgReference, price, available, category];
+       
+        let status, respBody;
+        
+        await dbPost(query, values)
+            .then(() => {
+                respBody = { message: "Successfully created article" };
+            })
+            .catch((err) => {
+                respBody = err;
+            });
+        return Response.json(respBody, {
+         status,
+        });
     }
 }
 

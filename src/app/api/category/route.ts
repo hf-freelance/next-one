@@ -1,4 +1,4 @@
-import { apiGet, apiPost } from "../database";
+import { dbGet, dbPost } from "../database";
 
 export async function POST(req: Request) {
  const body = await req.json();
@@ -11,7 +11,7 @@ export async function POST(req: Request) {
  const values = [label];
 
  let status, respBody;
- await apiPost(query, values)
+ await dbPost(query, values)
   .then(() => {
    status = 200;
    respBody = { message: "Successfully created article" };
@@ -32,7 +32,7 @@ export async function GET() {
    
     let status, body;
     try {
-     await apiGet(query)
+     await dbGet(query)
       .then((res) => {
        status = 200;
        body = res;

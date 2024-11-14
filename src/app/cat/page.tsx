@@ -14,6 +14,8 @@ export interface Item {
     name: string,
     caption: string,
     imgReference: string,
+    available: boolean,
+    price: number,
     category: string
 }
   
@@ -22,13 +24,18 @@ export default async function Page() {
     let categories: Category[] = [];
     let items: Item[] = [];
 
+    let itemsNumber = 0;
+
     const data = await categoryService.fetchCategories();
     if (!data) notFound();
     else categories = data;
 
     const dataItems = await itemService.fetchItems();
     if (!dataItems) notFound();
-    else items = dataItems;
+    else {
+        items = dataItems;
+        itemsNumber = items.length;
+    }
 
     return (
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
@@ -38,7 +45,7 @@ export default async function Page() {
                 </ul>
                 <CatForm />
                 <ItemForm data={categories}/>
-                <p>{items.length} articles dans la boutique</p>
+                <p>{itemsNumber} articles dans la boutique</p>
                 <table>
                     <tbody>
                         {items.map((e: Item, i: Key) => {
