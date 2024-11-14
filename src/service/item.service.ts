@@ -22,13 +22,13 @@ class ItemService {
     }
 
     async addItem(data: Item) {
-        const { name, caption, imgReference, price, available, category } = data;
+        const { title, caption, imgReference, price, available, category } = data;
        
         const query = `
            INSERT INTO Item(title, caption, imgReference, price, available, category)
            VALUES(?, ?, ?, ?, ?, ?)
          `;
-        const values = [name, caption, imgReference, price, available, category];
+        const values = [title, caption, imgReference, price, available, category];
        
         let status, respBody;
         

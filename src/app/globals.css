@@ -7,23 +7,30 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
 body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
 
+h3 {
+  font-size: large;
+  font-weight: 800;
+  text-align: center;
+}
 p {
   color: red;
 }
 
 input {
   color: #0a0a0a;
+  background-color: beige;
+}
+
+button {
+  background-color: grey;
+  color:#0a0a0a;
+  padding: 4px;
+  margin: 4px;
+  border-radius: 0.25em;
 }

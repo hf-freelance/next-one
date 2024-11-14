@@ -27,8 +27,10 @@ export default function CatForm() {
         <form method="post" onSubmit={handleSubmitCategory}>
             <label>
                 New category :
+                <br />
                 <input type="text" name="label"></input>
             </label>
+            <br />
             <button type="submit">Add category</button>
             <p>msg : {message}</p>
         </form>
