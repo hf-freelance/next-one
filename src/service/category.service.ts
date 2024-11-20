@@ -8,10 +8,10 @@ class CategoryService {
         try {
             await dbGet(query)
                 .then((res) => {
-                        body = res;
+                    body = res;
                 })
                 .catch((err: Error) => {
-                        body = { error: err };
+                    body = { error: err };
                 });
             return body;
 

@@ -1,9 +1,7 @@
 import Image from "next/image"
 import { notFound } from 'next/navigation'
-import CatForm from "./formCategory"
-import ItemForm from "./formItem"
 import categoryService from "@/service/category.service"
-import itemService from "@/service/item.service"
+import { fetchItems } from "@/service/item.service"
 import ItemTable from "./tableItem"
 import CatTable from "./tableCategory"
  
@@ -22,16 +20,13 @@ export interface Item {
   
 
 export default async function Page() {
-    let categories: Category[] = [];
-    let items: Item[] = [];
-
-    let itemsNumber = 0;
+    let categories: Category[] = [], items: Item[] = [], itemsNumber = 0;
 
     const data = await categoryService.fetchCategories();
     if (!data) notFound();
     else categories = data;
 
-    const dataItems = await itemService.fetchItems();
+    const dataItems = await fetchItems();
     if (!dataItems) notFound();
     else {
         items = dataItems;
@@ -42,13 +37,12 @@ export default async function Page() {
         <div className="items-center min-h-screen w-full p-8 pb-10 px-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
             <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
                 <h3>Catégories</h3>
-                    <CatTable data={categories} />
-                    <CatForm />
+                <CatTable data={categories} />
+
                 <hr />
                 <h3>Articles de la boutique</h3>
-                <ItemForm data={categories}/>
                 <p>{itemsNumber} articles dans la boutique</p>
-                <ItemTable data={items} />
+                <ItemTable data={items} categories={categories} />
             </main>
             <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
                 <a
