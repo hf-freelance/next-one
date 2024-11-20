@@ -1,7 +1,10 @@
 import Image from "next/image"
 import { notFound } from 'next/navigation'
-import categoryService from "@/service/category.service"
+import Link from "next/link"
+
+import { fetchCategories } from "@/service/category.service"
 import { fetchItems } from "@/service/item.service"
+
 import ItemTable from "./tableItem"
 import CatTable from "./tableCategory"
  
@@ -23,7 +26,7 @@ export interface Item {
 export default async function Page() {
     let categories: Category[] = [], items: Item[] = [], itemsNumber = 0;
 
-    const data = await categoryService.fetchCategories();
+    const data = await fetchCategories();
     if (!data) notFound();
     else categories = data;
 
@@ -45,22 +48,17 @@ export default async function Page() {
                 <p>{itemsNumber} articles dans la boutique</p>
                 <ItemTable data={items} categories={categories} />
             </main>
-            <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-                <a
-                    className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-                    href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-                    target="_blank"
-                    rel="noopener noreferrer"
+            <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center py-2">
+                <Link href={'/'}
                 >
                     <Image
-                    aria-hidden
-                    src="/file.svg"
-                    alt="File icon"
-                    width={16}
-                    height={16}
+                        aria-hidden
+                        src="/logo.svg"
+                        alt="File icon"
+                        width={100}
+                        height={10}
                     />
-                    Hello
-                </a>
+                </Link>
             </footer>
             
         </div>

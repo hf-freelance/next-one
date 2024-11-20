@@ -1,7 +1,9 @@
-import { dbGet } from "@/app/api/database";
+"use server";
 
-class CategoryService {
-    async fetchCategories() {
+import { dbDelete, dbGet, dbPost } from "@/app/api/database";
+
+
+export async function fetchCategories() {
         const query = `SELECT * from Category`;
         let body;
         
@@ -19,7 +21,46 @@ class CategoryService {
             console.error(error);
         }
     }
+
+
+
+export async function addCategory(data: string) {
+    const { label } = JSON.parse(data);
+    const query = `
+        INSERT INTO Category(label)
+        VALUES(?)
+        `;
+    const values = [label];
+    
+    let respBody;
+    
+    await dbPost(query, values)
+        .then((res) => {
+            console.log(res);
+            respBody = "Successfully created article";
+            return respBody;
+        })
+        .catch((err) => {
+            respBody = err;
+            throw respBody;
+        });
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
-export default new CategoryService;
+export async function deleteCategory(label: string) {
+    const query = `
+        DELETE FROM Category
+        WHERE label = ?;
+        `;
+    const values = [label];
+    
+    let respBody;
+    
+    await dbDelete(query, values)
+        .then(() => {
+            respBody = { message: "Successfully deleted article" };
+        })
+        .catch((err) => {
+            respBody = err;
+        });
+    return respBody;
+}

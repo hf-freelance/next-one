@@ -1,5 +1,5 @@
 "use server";
-import { dbGet, dbPost } from "@/app/api/database";
+import { dbDelete, dbGet, dbPost } from "@/app/api/database";
 
 
 export async function fetchItems() {
@@ -50,7 +50,7 @@ export async function deleteItem(id: number) {
     
     let respBody;
     
-    await dbPost(query, values)
+    await dbDelete(query, values)
         .then(() => {
             respBody = { message: "Successfully deleted article" };
         })

@@ -58,7 +58,7 @@ export default function ItemForm(props: { data: Category[]; handleNewItem: (data
                     </label>
                 </div>
  
-                <button type="submit">Add item</button>
+                <button type="submit" className="bg-green-700 text-white">Add item</button>
             </form>
         </section>
     )
