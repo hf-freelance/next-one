@@ -10,6 +10,7 @@ export interface Category {
 }
 
 export interface Item {
+    idItem: number,
     title: string,
     caption: string,
     imgReference: string,

@@ -36,7 +36,6 @@ export default function ItemForm(props: { data: Category[]; handleNewItem: (data
                 <div className="flex justify-between grid grid-cols-2 gap-2">
                     <div>Title</div>
                     <label>
-                        
                         <input name="title" type="text"></input>
                     </label>
                     <div>Caption</div>

@@ -40,3 +40,22 @@ export async function addItem(data: string) {
         });
     return respBody;
 }
+
+export async function deleteItem(id: number) {
+    const query = `
+        DELETE FROM Item
+        WHERE idItem = ?;
+        `;
+    const values = [id];
+    
+    let respBody;
+    
+    await dbPost(query, values)
+        .then(() => {
+            respBody = { message: "Successfully deleted article" };
+        })
+        .catch((err) => {
+            respBody = err;
+        });
+    return respBody;
+}

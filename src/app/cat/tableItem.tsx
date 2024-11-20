@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import ItemForm from './formItem';
 import { Category, Item } from './page';
 import { Key } from 'react';
-import { addItem } from '@/service/item.service';
+import { addItem, deleteItem } from '@/service/item.service';
 
 export default function ItemTable(props : { data: Item[], categories: Category[]}) {
     const router = useRouter();
@@ -13,6 +13,13 @@ export default function ItemTable(props : { data: Item[], categories: Category[]
 
     const handleNewItem = (data: string) => {
       addItem(JSON.parse(JSON.stringify(data)))
+        .then(() => router.refresh())
+        .catch((err) => console.log(err));
+    }
+
+    const handleDeleteItem = (data: number) => {
+      console.log(data);
+      deleteItem(data)
         .then(() => router.refresh())
         .catch((err) => console.log(err));
     }
@@ -43,6 +50,7 @@ export default function ItemTable(props : { data: Item[], categories: Category[]
                   <td className="px-4 py-2 text-gray-600 text-sm border-b">{item.category}</td>
                   <td className="px-4 py-2 text-gray-600 text-sm border-b">{item.price}</td>
                   <td className="px-4 py-2 text-gray-600 text-sm border-b">{item.available}</td>
+                  <td className='px-4 py-2 text-gray-600 text-sm border-b' onClick={() => handleDeleteItem(item.idItem)}>X</td>
               </tr>
             ))}
           </tbody>
